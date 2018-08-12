@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.vtuka.tuka.mapper.DressCollocationItemMapper">
+  <resultMap id="BaseResultMap" type="club.vtuka.tuka.model.DressCollocationItem">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="COLLOCATION_ID" jdbcType="BIGINT" property="collocationId" />
+    <result column="ITEM_URL" jdbcType="VARCHAR" property="itemUrl" />
+    <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName" />
+    <result column="ITEM_BRAND" jdbcType="VARCHAR" property="itemBrand" />
+    <result column="IMG_URL" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="PRICE" jdbcType="DECIMAL" property="price" />
+    <result column="IS_DELETE" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, COLLOCATION_ID, ITEM_URL, ITEM_NAME, ITEM_BRAND, IMG_URL, PRICE, IS_DELETE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dress_collocation_item
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insert" parameterType="club.vtuka.tuka.model.DressCollocationItem">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dress_collocation_item (COLLOCATION_ID, ITEM_URL, ITEM_NAME, 
+      ITEM_BRAND, IMG_URL, PRICE, 
+      IS_DELETE)
+    values (#{collocationId,jdbcType=BIGINT}, #{itemUrl,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, 
+      #{itemBrand,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{isDelete,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="club.vtuka.tuka.model.DressCollocationItem">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dress_collocation_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="collocationId != null">
+        COLLOCATION_ID,
+      </if>
+      <if test="itemUrl != null">
+        ITEM_URL,
+      </if>
+      <if test="itemName != null">
+        ITEM_NAME,
+      </if>
+      <if test="itemBrand != null">
+        ITEM_BRAND,
+      </if>
+      <if test="imgUrl != null">
+        IMG_URL,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="collocationId != null">
+        #{collocationId,jdbcType=BIGINT},
+      </if>
+      <if test="itemUrl != null">
+        #{itemUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null">
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemBrand != null">
+        #{itemBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="club.vtuka.tuka.model.DressCollocationItem">
+    update dress_collocation_item
+    <set>
+      <if test="collocationId != null">
+        COLLOCATION_ID = #{collocationId,jdbcType=BIGINT},
+      </if>
+      <if test="itemUrl != null">
+        ITEM_URL = #{itemUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null">
+        ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemBrand != null">
+        ITEM_BRAND = #{itemBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        IMG_URL = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="club.vtuka.tuka.model.DressCollocationItem">
+    update dress_collocation_item
+    set COLLOCATION_ID = #{collocationId,jdbcType=BIGINT},
+      ITEM_URL = #{itemUrl,jdbcType=VARCHAR},
+      ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      ITEM_BRAND = #{itemBrand,jdbcType=VARCHAR},
+      IMG_URL = #{imgUrl,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=DECIMAL},
+      IS_DELETE = #{isDelete,jdbcType=BIT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 批量插入数据 -->
+  <insert id="insertBatch" parameterType="java.util.ArrayList" useGeneratedKeys="true">
+    <selectKey keyProperty="id" order="AFTER" resultType="long">
+      SELECT
+      LAST_INSERT_ID()
+    </selectKey>
+    insert into dress_collocation_item (COLLOCATION_ID, ITEM_URL, ITEM_NAME,
+    ITEM_BRAND, IMG_URL, PRICE,IS_DELETE)
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (
+      #{item.collocationId},#{item.itemUrl},#{item.itemName},#{item.itemBrand},
+      #{item.imgUrl},#{item.price},#{item.isDelete}
+      )
+    </foreach>
+  </insert>
+</mapper>

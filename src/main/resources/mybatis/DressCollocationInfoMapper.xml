@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.vtuka.tuka.mapper.DressCollocationInfoMapper">
+  <resultMap id="BaseResultMap" type="club.vtuka.tuka.model.DressCollocationInfo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="COLLOCATION_URL" jdbcType="VARCHAR" property="collocationUrl" />
+    <result column="IMG_URL" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="COLLOCATION_TYPE" jdbcType="VARCHAR" property="collocationType" />
+    <result column="COLLOCATION_DESC" jdbcType="VARCHAR" property="collocationDesc" />
+    <result column="IS_DELETE" jdbcType="BIT" property="isDelete" />
+    <result column="IS_SHOW" jdbcType="BIT" property="isShow" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, COLLOCATION_URL, IMG_URL, COLLOCATION_TYPE, COLLOCATION_DESC, IS_DELETE, IS_SHOW
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dress_collocation_info
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insert" parameterType="club.vtuka.tuka.model.DressCollocationInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dress_collocation_info (COLLOCATION_URL, IMG_URL, COLLOCATION_TYPE,
+      COLLOCATION_DESC, IS_DELETE, IS_SHOW
+      )
+    values (#{collocationUrl,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, #{collocationType,jdbcType=VARCHAR}, 
+      #{collocationDesc,jdbcType=VARCHAR}, #{isDelete,jdbcType=BIT}, #{isShow,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="club.vtuka.tuka.model.DressCollocationInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dress_collocation_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="collocationUrl != null">
+        COLLOCATION_URL,
+      </if>
+      <if test="imgUrl != null">
+        IMG_URL,
+      </if>
+      <if test="collocationType != null">
+        COLLOCATION_TYPE,
+      </if>
+      <if test="collocationDesc != null">
+        COLLOCATION_DESC,
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE,
+      </if>
+      <if test="isShow != null">
+        IS_SHOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="collocationUrl != null">
+        #{collocationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="collocationType != null">
+        #{collocationType,jdbcType=VARCHAR},
+      </if>
+      <if test="collocationDesc != null">
+        #{collocationDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="isShow != null">
+        #{isShow,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="club.vtuka.tuka.model.DressCollocationInfo">
+    update dress_collocation_info
+    <set>
+      <if test="collocationUrl != null">
+        COLLOCATION_URL = #{collocationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        IMG_URL = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="collocationType != null">
+        COLLOCATION_TYPE = #{collocationType,jdbcType=VARCHAR},
+      </if>
+      <if test="collocationDesc != null">
+        COLLOCATION_DESC = #{collocationDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="isShow != null">
+        IS_SHOW = #{isShow,jdbcType=BIT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="club.vtuka.tuka.model.DressCollocationInfo">
+    update dress_collocation_info
+    set COLLOCATION_URL = #{collocationUrl,jdbcType=VARCHAR},
+      IMG_URL = #{imgUrl,jdbcType=VARCHAR},
+      COLLOCATION_TYPE = #{collocationType,jdbcType=VARCHAR},
+      COLLOCATION_DESC = #{collocationDesc,jdbcType=VARCHAR},
+      IS_DELETE = #{isDelete,jdbcType=BIT},
+      IS_SHOW = #{isShow,jdbcType=BIT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 批量插入数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true">
+    <selectKey keyProperty="id" order="AFTER" resultType="long">
+      SELECT
+      LAST_INSERT_ID()
+    </selectKey>
+    insert into dress_collocation_info (COLLOCATION_URL, IMG_URL, COLLOCATION_TYPE,
+    COLLOCATION_DESC, IS_DELETE, IS_SHOW
+    )
+    values
+    <foreach collection="list" index="index" item="info" separator=",">
+      (
+      #{info.collocationUrl},#{info.imgUrl},#{info.collocationType},#{info.collocationDesc},
+      #{info.isDelete},#{info.isShow}
+      )
+    </foreach>
+  </insert>
+  <!-- 分页查询 -->
+  <select id="queryBatchByPage" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dress_collocation_info
+    limit #{arg1},#{arg2}
+  </select>
+</mapper>
