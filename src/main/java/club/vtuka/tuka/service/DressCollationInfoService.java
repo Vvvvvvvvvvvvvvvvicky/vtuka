@@ -17,7 +17,12 @@ public class DressCollationInfoService {
     private DressCollocationInfoMapper infoMapper;
 
     public List<DressCollocationInfo> getDressCollationInfoListByPage(int pageNo,int pageSize){
-        List<DressCollocationInfo> infoList = infoMapper.queryBatchByPage(pageNo, pageSize);
+        List<DressCollocationInfo> infoList = infoMapper.selectBatchByPage(pageNo, pageSize);
+        return infoList;
+    }
+
+    public List<DressCollocationInfo> getDressCollationInfoList(){
+        List<DressCollocationInfo> infoList = infoMapper.selectBatch();
         return infoList;
     }
 

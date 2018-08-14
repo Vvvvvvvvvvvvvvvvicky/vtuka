@@ -128,10 +128,15 @@
     </foreach>
   </insert>
   <!-- 分页查询 -->
-  <select id="queryBatchByPage" parameterType="int" resultMap="BaseResultMap">
+  <select id="selectBatchByPage" parameterType="int" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from dress_collocation_info
     limit #{arg1},#{arg2}
+  </select>
+  <select id="selectBatch" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dress_collocation_info
   </select>
 </mapper>

@@ -54,4 +54,10 @@ public class UserController {
         map.put("friends", friends);
         return "hello";
     }
+
+    @RequestMapping("/index")
+    public String freemarker2(Map<String, Object> map){
+        map.put("name", "Joe");
+        return "index";
+    }
 }

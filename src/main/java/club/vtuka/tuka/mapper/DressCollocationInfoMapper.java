@@ -20,6 +20,8 @@ public interface DressCollocationInfoMapper {
 
     int insertBatch(List<DressCollocationInfo> list);
 
-    List<DressCollocationInfo> queryBatchByPage(@Param("arg1") int startPage,@Param("arg2") int batchSize);
+    List<DressCollocationInfo> selectBatchByPage(@Param("arg1") int startPage,@Param("arg2") int batchSize);
+
+    List<DressCollocationInfo> selectBatch();
 
 }
