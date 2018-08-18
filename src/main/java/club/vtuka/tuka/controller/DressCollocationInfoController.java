@@ -9,10 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,15 +39,14 @@ public class DressCollocationInfoController {
     }
 
     @RequestMapping(value="/getInfoListByPage", method = RequestMethod.GET)
-    public Map<String,Object> getInfoListByPage(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize){
+    public String getInfoListByPage(Model model,@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize){
         pageNo=pageNo==null?1:pageNo;
         pageSize=pageSize==null?10:pageSize;
         PageHelper.startPage(pageNo,pageSize);
         List<DressCollocationInfo> infoList = infoService.getDressCollationInfoList();
         PageInfo<DressCollocationInfo> pageInfo = new PageInfo<>(infoList);
-        HashMap<String, Object> resultMap = new HashMap<String,Object>();
-        resultMap.put("pageInfo",pageInfo);
-        return resultMap;
+        model.addAttribute("page",pageInfo);
+        return "dressInfoList";
     }
 
     @RequestMapping("/index")

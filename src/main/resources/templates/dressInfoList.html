@@ -1,0 +1,67 @@
+<#setting classic_compatible=true>
+<#assign base=request.contextPath />
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <style>
+        li{float: left; list-style: none;margin: 10px;}
+        .active{background-color: red}
+    </style>
+</head>
+<body>
+<div>
+    <div class="row">
+        <#if page.list??>
+            <#list page.list as item>
+                <div class="col-xs-4 card" style="width:300px;margin:10px 10px 10px 10px">
+                    <img class="card-img-top" alt="test" src="${item.imgUrl}">
+                    <div class="card-body">
+                        <h7 class="card-title">${item.collocationType}</h7>
+                        <div class="btn-group justify-content-center">
+                            <input class="btn btn-info" type="button" value="选择显示">
+                            <input class="btn btn-dark" type="button" value="删除此项">
+                        </div>
+                    </div>
+                </div>
+            </#list>
+            <#else>
+                <p>	抱歉!暂时无数据 </p>
+        </#if>
+    </div>
+    <div class="message" style="text-align: center">
+        共<i class="blue">${page.total}</i>条记录，当前显示第<i class="blue">${page.pageNum}/${page.pages}</i>页
+    </div>
+    <div>
+        <ul class="pagination justify-content-center">
+            <#if !page.isFirstPage >
+            <li class="page-item"><a class="page-link" href="javascript:queryAll(${page.firstPage}, ${page.pageSize});"><<</a></li>
+            <li class="page-item"><a class="page-link" href="javascript:queryAll(${page.prePage}, ${page.pageSize});"><</a></li>
+            </#if>
+            <#list page.navigatepageNums as navigatepageNum>
+                <#if navigatepageNum==page.pageNum>
+                    <li class="active page-item"><a class="page-link" href="javascript:queryAll(${navigatepageNum}, ${page.pageSize});">${navigatepageNum}</a></li>
+                </#if>
+                <#if navigatepageNum!=page.pageNum>
+                    <li class="page-item"><a class="page-link" href="javascript:queryAll(${navigatepageNum}, ${page.pageSize});">${navigatepageNum}</a></li>
+                </#if>
+            </#list>
+            <#if !page.isLastPage>
+                <li class="page-item"><a class="page-link" href="javascript:queryAll(${page.nextPage}, ${page.pageSize});">></a></li>
+                <li class="page-item"><a class="page-link" href="javascript:queryAll(${page.lastPage}, ${page.pageSize});">>></a></li>
+            </#if>
+
+        </ul>
+    </div>
+    <script type="text/javascript" src="https://cdn.staticfile.org/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function queryAll(pageNum, pageSize){
+            document.location.href="http://localhost:8080/dress/getInfoListByPage?pageNo="+pageNum;
+        }
+    </script>
+</div>
+</body>
+</html>
