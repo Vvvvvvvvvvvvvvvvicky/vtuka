@@ -10,7 +10,7 @@
     <properties url="${mybatis.generator.generatorConfig.properties}"/>-->
 
     <!--数据库驱动包路径 -->
-    <classPathEntry location="C:\Users\cgb\.m2\repository\mysql\mysql-connector-java\5.1.24\mysql-connector-java-5.1.24.jar"/>
+    <classPathEntry location="C:\Users\cgb\.m2\repository\mysql\mysql-connector-java\5.1.46\mysql-connector-java-5.1.46.jar"/>
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <!--关闭注释 -->
@@ -31,7 +31,7 @@
         </javaModelGenerator>
 
         <!--生成xml mapper文件 路径 -->
-        <sqlMapGenerator targetPackage="club.vtuka.tuka.mapper" targetProject="src/main/java">
+        <sqlMapGenerator targetPackage="mybatis" targetProject="src/main/resources">
             <property name="enableSubPackages" value="ture"/>
         </sqlMapGenerator>
 

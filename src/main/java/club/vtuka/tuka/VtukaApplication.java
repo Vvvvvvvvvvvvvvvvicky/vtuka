@@ -29,18 +29,18 @@ public class VtukaApplication {
 		return dataSource;
 	}
 
-	@Bean
-	public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
-
-		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-		sqlSessionFactoryBean.setDataSource(dataSource());
-
-		PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-
-		sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mybatis/*.xml"));
-
-		return sqlSessionFactoryBean.getObject();
-	}
+//	@Bean
+//	public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
+//
+//		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+//		sqlSessionFactoryBean.setDataSource(dataSource());
+//
+//		PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+//
+//		sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mybatis/*.xml"));
+//
+//		return sqlSessionFactoryBean.getObject();
+//	}
 
 	@Bean
 	public PlatformTransactionManager transactionManager() {
