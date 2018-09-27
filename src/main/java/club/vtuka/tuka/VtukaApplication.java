@@ -42,10 +42,10 @@ public class VtukaApplication {
 //		return sqlSessionFactoryBean.getObject();
 //	}
 
-	@Bean
-	public PlatformTransactionManager transactionManager() {
-		return new DataSourceTransactionManager(dataSource());
-	}
+//	@Bean
+//	public PlatformTransactionManager transactionManager() {
+//		return new DataSourceTransactionManager(dataSource());
+//	}
 
 	@Autowired
 	private SpiderController spiderController;

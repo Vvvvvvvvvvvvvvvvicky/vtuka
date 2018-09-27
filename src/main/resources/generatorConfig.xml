@@ -36,7 +36,7 @@
         </sqlMapGenerator>
 
         <!-- 生成的Dao接口 的包路径 -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="club.vtuka.tuka.service" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="club.vtuka.tuka.mapper" targetProject="src/main/java">
             <property name="enableSubPackages" value="ture"/>
         </javaClientGenerator>
 

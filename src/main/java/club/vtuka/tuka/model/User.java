@@ -3,7 +3,7 @@ package club.vtuka.tuka.model;
 public class User {
     private Long id;
 
-    private String name;
+    private String userName;
 
     private String password;
 
@@ -15,12 +15,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
     }
 
     public String getPassword() {

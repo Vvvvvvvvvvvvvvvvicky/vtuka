@@ -1,4 +1,4 @@
-package club.vtuka.tuka.service;
+package club.vtuka.tuka.mapper;
 
 import club.vtuka.tuka.model.User;
 
