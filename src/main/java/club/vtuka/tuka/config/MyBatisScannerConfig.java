@@ -9,8 +9,8 @@ public class MyBatisScannerConfig {
 	@Bean
 	public MapperScannerConfigurer MyBatisScannerConfig(){
 		MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-		mapperScannerConfigurer.setBasePackage("");
-		mapperScannerConfigurer.setSqlSessionFactoryBeanName("");
+		mapperScannerConfigurer.setBasePackage("club.vtuka.tuka.mapper");
+		mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
 		return mapperScannerConfigurer;
 	}
 }

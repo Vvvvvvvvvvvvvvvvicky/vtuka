@@ -1,0 +1,42 @@
+body {
+    background: url(image/background.jpg)
+}
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+    text-shadow: inset 0px 0px black;
+}
+
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.form-signin .form-signin-heading, .form-signin .checkbox {
+    margin-bottom: 10px;
+}
+
+.form-center{
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 350px;
+    width:500px;
+    padding: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.form-center .username input,.form-center .password input{
+    height: 50px;
+    padding-left: 60px;
+}
+.form-control-feedback {
+    line-height: 50px;
+    left: 15px;
+} 
