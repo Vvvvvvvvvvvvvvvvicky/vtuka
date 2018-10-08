@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <style>
         li{float: left; list-style: none;margin: 10px;}
-        .active{background-color: red}
+        .active{background-color: darkblue}
     </style>
 </head>
 <body>
@@ -20,13 +20,23 @@
                     <div class="card-body">
                         <h7 class="card-title">${item.collocationType}</h7>
                         <div class="btn-group justify-content-center">
-                            <input class="btn btn-info" type="button" value="选择显示">
-                            <input class="btn btn-dark" type="button" value="删除此项">
+                            <#if item.isShow == false>
+                                <input class="btn btn-info" type="button" value="选择显示" onclick="javascript:updateInfo(${item.id},1)">
+                            <#else>
+                                <input class="btn btn-info" type="button" value="选择隐藏" onclick="javascript:updateInfo(${item.id},0)">
+                            </#if>
+                            <#if item.isDelete == false>
+                                <input class="btn btn-dark" type="button" value="删除此项"  onclick="javascript:deleteInfoById(${item.id})">
+                            <#else>
+                                <input class="btn btn-dark" disabled type="button" value="删除此项">
+                            </#if>
+
+                            <input class="btn btn-success" type="button" value="查看详情" data-toggle="modal" data-target=".bd-example-modal-lg">
                         </div>
                     </div>
                 </div>
             </#list>
-            <#else>
+        <#else>
                 <p>	抱歉!暂时无数据 </p>
         </#if>
     </div>
@@ -54,12 +64,50 @@
 
         </ul>
     </div>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+               <table>
+                   <tr></tr>
+                   <tbody>
+                   <td></td>
+                   </tbody>
+               </table>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript" src="https://cdn.staticfile.org/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         function queryAll(pageNum, pageSize){
             document.location.href="http://localhost:8080/dress/getInfoListByPage?pageNo="+pageNum;
+        }
+        function updateInfo(id,isShow){
+            $.ajax({
+                url:'/dress/changeShowStatus',
+                methods:'GET',
+                data:{id: id, isShow: isShow},
+                success: function (result) {
+                    if(result.status == 1){
+                        location.reload();
+                    }
+                }
+            });
+        }
+
+        function deleteInfoById(id){
+            $.ajax({
+                url:'/dress/deleteInfoById',
+                methods:'GET',
+                data:{id: id},
+                success: function (result) {
+                    if(result.status == 1){
+                        location.reload();
+                    }
+                }
+            });
         }
     </script>
 </div>

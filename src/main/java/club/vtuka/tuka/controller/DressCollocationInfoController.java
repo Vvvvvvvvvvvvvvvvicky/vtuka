@@ -1,6 +1,7 @@
 package club.vtuka.tuka.controller;
 
 import club.vtuka.tuka.model.DressCollocationInfo;
+import club.vtuka.tuka.model.Result;
 import club.vtuka.tuka.service.DressCollationInfoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
@@ -54,4 +56,31 @@ public class DressCollocationInfoController {
         map.put("name", "Joe");
         return "index";
     }
+
+    @RequestMapping(value="/changeShowStatus",method = RequestMethod.GET)
+    @ResponseBody
+    public Result changeShowStatusById(@Param("id")Long id, @Param("isShow") Boolean isShow){
+        if(id == null || isShow == null){
+            return new Result(Result.wrongParam,null);
+        }
+        DressCollocationInfo info = new DressCollocationInfo();
+        info.setIsShow(isShow);
+        info.setId(id);
+        int updateResult = infoService.updateDressCollocationInfo(info);
+        return new Result(updateResult,null);
+    }
+
+    @RequestMapping(value="/deleteInfoById",method=RequestMethod.GET)
+    @ResponseBody
+    public Result deleteInfoById(@Param("id")Long id){
+        if(id == null){
+            return new Result(Result.wrongParam,null);
+        }
+        DressCollocationInfo info = new DressCollocationInfo();
+        info.setIsDelete(true);
+        info.setId(id);
+        int result = infoService.updateDressCollocationInfo(info);
+        return new Result(result,null);
+    }
+
 }

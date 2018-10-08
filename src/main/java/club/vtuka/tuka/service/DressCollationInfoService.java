@@ -26,4 +26,9 @@ public class DressCollationInfoService {
         return infoList;
     }
 
+    public int updateDressCollocationInfo(DressCollocationInfo info){
+        int result = infoMapper.updateByPrimaryKeySelective(info);
+        return result;
+    }
+
 }

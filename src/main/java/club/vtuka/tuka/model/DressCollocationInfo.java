@@ -34,6 +34,8 @@ public class DressCollocationInfo {
         this.isShow = isShow;
     }
 
+    public DressCollocationInfo(){}
+
     public Long getId() {
         return id;
     }
