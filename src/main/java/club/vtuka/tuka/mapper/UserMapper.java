@@ -7,11 +7,9 @@ public interface UserMapper {
 
     int insertSelective(User record);
 
-    User selectByPrimaryKey(Long id);
+    User selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-    
-    User selectByUserName(String userName);
 }

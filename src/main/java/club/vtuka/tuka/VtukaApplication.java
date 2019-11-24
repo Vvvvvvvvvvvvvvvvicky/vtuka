@@ -1,12 +1,16 @@
 package club.vtuka.tuka;
 
+import club.vtuka.tuka.controller.SpiderController;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import club.vtuka.tuka.controller.SpiderController;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @EnableAutoConfiguration
 @SpringBootApplication
@@ -45,6 +49,16 @@ public class VtukaApplication {
 		SpringApplication.run(VtukaApplication.class, args);
 	}
 
+    //全局配置跨域
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/*").allowedOrigins("http://localhost:8080");
+            }
+        };
+    }
 
 //	public void task(){
 //		spiderController.startSpider();

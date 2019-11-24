@@ -39,11 +39,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-security</artifactId>
-		    <version>2.0.5.RELEASE</version>
-		</dependency>
+<!--		<dependency>-->
+<!--		    <groupId>org.springframework.boot</groupId>-->
+<!--		    <artifactId>spring-boot-starter-security</artifactId>-->
+<!--		    <version>2.0.5.RELEASE</version>-->
+<!--		</dependency>-->
 				
 		<!-- db -->
 		<dependency>
@@ -58,11 +58,7 @@
 		    <artifactId>c3p0</artifactId>
 		    <version>0.9.1.2</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-freemarker</artifactId>
-			<version>1.4.1.RELEASE</version>
-		</dependency>
+
 		<!-- httpclient -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -104,6 +100,7 @@
 			<artifactId>pagehelper-spring-boot-starter</artifactId>
 			<version>1.2.5</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+       "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <!-- 配置Run As Maven build : Goals 参数 : mybatis-generator:generate -Dmybatis.generator.overwrite=true -->
 <!-- 配置 tableName,使用 Run As Maven build 生成 dao model 层 -->
@@ -10,7 +10,7 @@
     <properties url="${mybatis.generator.generatorConfig.properties}"/>-->
 
     <!--数据库驱动包路径 -->
-    <classPathEntry location="C:\Users\cgb\.m2\repository\mysql\mysql-connector-java\5.1.46\mysql-connector-java-5.1.46.jar"/>
+    <classPathEntry location="C:\Users\vicky\.m2\repository\mysql\mysql-connector-java\5.1.24\mysql-connector-java-5.1.24.jar"/>
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <!--关闭注释 -->
@@ -41,7 +41,7 @@
         </javaClientGenerator>
 
         <!--对应数据库表名，多个表，请复制指定 -->
-        <table  tableName="user" domainObjectName="User"
+        <table  tableName="role1" domainObjectName="Role1"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false" enableDeleteByPrimaryKey="false">
             <!-- <property name="useActualColumnNames" value="true"/> -->
@@ -54,5 +54,7 @@
             <!-- 无论字段是什么类型，生成的类属性都是varchar -->
             <!-- <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" /> -->
         </table>
+
+
     </context>
 </generatorConfiguration>
