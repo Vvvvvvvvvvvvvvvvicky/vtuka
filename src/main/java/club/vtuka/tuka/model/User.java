@@ -1,10 +1,13 @@
 package club.vtuka.tuka.model;
 
-
-import java.util.List;
-
-public class User /*implements UserDetails*/ {
+public class User {
     private Integer id;
+
+    private String username;
+
+    private String password;
+
+    private Boolean enabled;
 
     private String phone;
 
@@ -12,25 +15,7 @@ public class User /*implements UserDetails*/ {
 
     private String address;
 
-    private Boolean enabled;
-
-    private String username;
-
-    private String password;
-
-    private String userface;
-
     private String remark;
-
-    private List<Role> roles;
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
 
     public Integer getId() {
         return id;
@@ -40,8 +25,28 @@ public class User /*implements UserDetails*/ {
         this.id = id;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getPhone() {
@@ -68,34 +73,6 @@ public class User /*implements UserDetails*/ {
         this.address = address == null ? null : address.trim();
     }
 
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    public String getUserface() {
-        return userface;
-    }
-
-    public void setUserface(String userface) {
-        this.userface = userface == null ? null : userface.trim();
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -103,37 +80,4 @@ public class User /*implements UserDetails*/ {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
-
-/*
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
-*/
-
-/*
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
-        return authorities;
-    }
-    */
 }

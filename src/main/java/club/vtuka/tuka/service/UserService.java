@@ -2,6 +2,7 @@ package club.vtuka.tuka.service;
 
 
 import club.vtuka.tuka.mapper.UserMapper;
+import club.vtuka.tuka.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,18 @@ public class UserService /*implements UserDetailsService*/ {
 
 	@Autowired
 	private UserMapper userMapper;
+
+	public User getUserByUsernameNPassword(String username, String password){
+		return userMapper.selectByUsernameNPassword(username, password);
+	}
+
+	public void add(User user){
+		userMapper.insert(user);
+	}
+
+	public User getUserByUsername(String username){
+		return userMapper.selectByUsername(username);
+	}
 
 	//@Autowired
 //	private BCryptPasswordEncoder passwordEncoder;

@@ -3,18 +3,16 @@
 <mapper namespace="club.vtuka.tuka.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="club.vtuka.tuka.model.User">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="enabled" jdbcType="BIT" property="enabled" />
     <result column="phone" jdbcType="CHAR" property="phone" />
     <result column="telephone" jdbcType="VARCHAR" property="telephone" />
     <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="enabled" jdbcType="BIT" property="enabled" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="userface" jdbcType="VARCHAR" property="userface" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, phone, telephone, address, enabled, username, password, userface, remark
+    id, username, password, enabled, phone, telephone, address, remark
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -26,14 +24,12 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user (name, phone, telephone, 
-      address, enabled, username, 
-      password, userface, remark
-      )
-    values (#{name,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR}, #{telephone,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{enabled,jdbcType=BIT}, #{username,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{userface,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
-      )
+    insert into user (username, password, enabled, 
+      phone, telephone, address, 
+      remark)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{enabled,jdbcType=BIT}, 
+      #{phone,jdbcType=CHAR}, #{telephone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="club.vtuka.tuka.model.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -41,8 +37,14 @@
     </selectKey>
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        name,
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="enabled != null">
+        enabled,
       </if>
       <if test="phone != null">
         phone,
@@ -53,25 +55,19 @@
       <if test="address != null">
         address,
       </if>
-      <if test="enabled != null">
-        enabled,
-      </if>
-      <if test="username != null">
-        username,
-      </if>
-      <if test="password != null">
-        password,
-      </if>
-      <if test="userface != null">
-        userface,
-      </if>
       <if test="remark != null">
         remark,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=BIT},
       </if>
       <if test="phone != null">
         #{phone,jdbcType=CHAR},
@@ -82,18 +78,6 @@
       <if test="address != null">
         #{address,jdbcType=VARCHAR},
       </if>
-      <if test="enabled != null">
-        #{enabled,jdbcType=BIT},
-      </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="userface != null">
-        #{userface,jdbcType=VARCHAR},
-      </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
@@ -102,8 +86,14 @@
   <update id="updateByPrimaryKeySelective" parameterType="club.vtuka.tuka.model.User">
     update user
     <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=BIT},
       </if>
       <if test="phone != null">
         phone = #{phone,jdbcType=CHAR},
@@ -114,18 +104,6 @@
       <if test="address != null">
         address = #{address,jdbcType=VARCHAR},
       </if>
-      <if test="enabled != null">
-        enabled = #{enabled,jdbcType=BIT},
-      </if>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="userface != null">
-        userface = #{userface,jdbcType=VARCHAR},
-      </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
@@ -134,226 +112,25 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="club.vtuka.tuka.model.User">
     update user
-    set name = #{name,jdbcType=VARCHAR},
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      enabled = #{enabled,jdbcType=BIT},
       phone = #{phone,jdbcType=CHAR},
       telephone = #{telephone,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
-      enabled = #{enabled,jdbcType=BIT},
-      username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      userface = #{userface,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <resultMap id="BaseResultMap" type="club.vtuka.tuka.model.User">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="phone" jdbcType="CHAR" property="phone" />
-    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
-    <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="enabled" jdbcType="BIT" property="enabled" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="userface" jdbcType="VARCHAR" property="userface" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, name, phone, telephone, address, enabled, username, password, userface, remark
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from user
-    where id = #{id,jdbcType=INTEGER}
+    where username = #{username,jdbcType=VARCHAR}
   </select>
-  <insert id="insert" parameterType="club.vtuka.tuka.model.User">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into user (name, phone, telephone, 
-      address, enabled, username, 
-      password, userface, remark
-      )
-    values (#{name,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR}, #{telephone,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{enabled,jdbcType=BIT}, #{username,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{userface,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="club.vtuka.tuka.model.User">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        name,
-      </if>
-      <if test="phone != null">
-        phone,
-      </if>
-      <if test="telephone != null">
-        telephone,
-      </if>
-      <if test="address != null">
-        address,
-      </if>
-      <if test="enabled != null">
-        enabled,
-      </if>
-      <if test="username != null">
-        username,
-      </if>
-      <if test="password != null">
-        password,
-      </if>
-      <if test="userface != null">
-        userface,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        #{phone,jdbcType=CHAR},
-      </if>
-      <if test="telephone != null">
-        #{telephone,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null">
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="enabled != null">
-        #{enabled,jdbcType=BIT},
-      </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="userface != null">
-        #{userface,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="club.vtuka.tuka.model.User">
-    update user
-    <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=CHAR},
-      </if>
-      <if test="telephone != null">
-        telephone = #{telephone,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null">
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="enabled != null">
-        enabled = #{enabled,jdbcType=BIT},
-      </if>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="userface != null">
-        userface = #{userface,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="club.vtuka.tuka.model.User">
-    update user
-    set name = #{name,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=CHAR},
-      telephone = #{telephone,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      enabled = #{enabled,jdbcType=BIT},
-      username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      userface = #{userface,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="club.vtuka.tuka.model.User">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_name" jdbcType="VARCHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, user_name, password
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+  <select id="selectByUsernameNPassword" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from user
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <insert id="insert" parameterType="club.vtuka.tuka.model.User">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into user (user_name, password)
-    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="club.vtuka.tuka.model.User">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="username != null">
-        user_name,
-      </if>
-      <if test="password != null">
-        password,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="club.vtuka.tuka.model.User">
-    update user
-    <set>
-      <if test="username != null">
-        user_name = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="club.vtuka.tuka.model.User">
-    update user
-    set user_name = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where user_name = #{username,jdbcType=VARCHAR}
+    where username = #{username,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
   </select>
 </mapper>

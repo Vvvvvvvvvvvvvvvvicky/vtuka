@@ -41,7 +41,7 @@
         </javaClientGenerator>
 
         <!--对应数据库表名，多个表，请复制指定 -->
-        <table  tableName="role1" domainObjectName="Role1"
+        <table  tableName="user" domainObjectName="User"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false" enableDeleteByPrimaryKey="false">
             <!-- <property name="useActualColumnNames" value="true"/> -->
