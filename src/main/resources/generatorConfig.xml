@@ -3,11 +3,11 @@
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
-<!-- 配置Run As Maven build : Goals 参数 : mybatis-generator:generate -Dmybatis.generator.overwrite=true -->
+<!-- 配置Run As Maven build : Goals 参数 : mapper-generator:generate -Dmybatis.generator.overwrite=true -->
 <!-- 配置 tableName,使用 Run As Maven build 生成 dao model 层 -->
 <generatorConfiguration>
     <!-- 配置文件路径
-    <properties url="${mybatis.generator.generatorConfig.properties}"/>-->
+    <properties url="${mapper.generator.generatorConfig.properties}"/>-->
 
     <!--数据库驱动包路径 -->
     <classPathEntry location="C:\Users\vicky\.m2\repository\mysql\mysql-connector-java\5.1.24\mysql-connector-java-5.1.24.jar"/>
@@ -41,7 +41,7 @@
         </javaClientGenerator>
 
         <!--对应数据库表名，多个表，请复制指定 -->
-        <table  tableName="user" domainObjectName="User"
+        <table  tableName="user1" domainObjectName="User1"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false" enableDeleteByPrimaryKey="false">
             <!-- <property name="useActualColumnNames" value="true"/> -->

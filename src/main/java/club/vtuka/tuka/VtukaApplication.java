@@ -4,17 +4,13 @@ import club.vtuka.tuka.controller.SpiderController;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-@EnableAutoConfiguration
 @SpringBootApplication
-@ComponentScan
 @MapperScan("club.vtuka.tuka.mapper")
 public class VtukaApplication {
 //	@Bean
@@ -32,7 +28,7 @@ public class VtukaApplication {
 //
 //		PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 //
-//		sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mybatis/*.xml"));
+//		sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mapper/*.xml"));
 //
 //		return sqlSessionFactoryBean.getObject();
 //	}
