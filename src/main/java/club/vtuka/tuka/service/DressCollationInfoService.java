@@ -16,11 +16,21 @@ public class DressCollationInfoService {
     @Autowired
     private DressCollocationInfoMapper infoMapper;
 
+    /**
+     * 手动分页，获取分页搭配列表
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
     public List<DressCollocationInfo> getDressCollationInfoListByPage(int pageNo,int pageSize){
         List<DressCollocationInfo> infoList = infoMapper.selectBatchByPage(pageNo, pageSize);
         return infoList;
     }
 
+    /**
+     * 获取全部搭配列表
+     * @return
+     */
     public List<DressCollocationInfo> getDressCollationInfoList(){
         List<DressCollocationInfo> infoList = infoMapper.selectBatch();
         return infoList;

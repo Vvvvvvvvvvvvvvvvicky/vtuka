@@ -8,28 +8,30 @@ import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Vicky on 2018/8/9.
  */
-@Controller
-@RequestMapping("/dress")
-public class DressCollocationInfoController {
-    private static final Logger logger = LoggerFactory.getLogger(DressCollocationInfoController.class);
+@RestController
+public class DressCollocationController {
+    private static final Logger logger = LoggerFactory.getLogger(DressCollocationController.class);
 
 
     @Autowired
     private DressCollationInfoService infoService;
 
-    @RequestMapping(value="/getInfoListByLimit")
-    public List<DressCollocationInfo> getDressCollationInfoList(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize){
+    /**
+     * 手动分页
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/api/collocations")
+    public List<DressCollocationInfo> list0(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize){
         if(pageNo == null || pageNo < 0 || pageSize < 0){
             logger.error("传入参数不正确");
             return null;
@@ -39,22 +41,24 @@ public class DressCollocationInfoController {
         return infoList;
     }
 
-    @RequestMapping(value="/getInfoListByPage", method = RequestMethod.GET)
-    public String getInfoListByPage(Model model,@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize){
+    /**
+     * 利用 PageHelper 分页插件进行分页
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/api/collocations")
+    public PageInfo list(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize){
         pageNo=pageNo==null?1:pageNo;
         pageSize=pageSize==null?10:pageSize;
         PageHelper.startPage(pageNo,pageSize);
         List<DressCollocationInfo> infoList = infoService.getDressCollationInfoList();
+        infoList.size();
         PageInfo<DressCollocationInfo> pageInfo = new PageInfo<>(infoList);
-        model.addAttribute("page",pageInfo);
-        return "dressInfoList";
+        return pageInfo;
     }
 
-    @RequestMapping("/index")
-    public String freemarker2(Map<String, Object> map){
-        map.put("name", "Joe");
-        return "index";
-    }
+
 /*
     @RequestMapping(value="/changeShowStatus",method = RequestMethod.GET)
     @ResponseBody
