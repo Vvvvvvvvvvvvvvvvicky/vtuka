@@ -1,6 +1,7 @@
 package club.vtuka.tuka.controller;
 
 import club.vtuka.tuka.model.DressCollocationInfo;
+import club.vtuka.tuka.model.DressCollocationItem;
 import club.vtuka.tuka.service.DressCollationInfoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -23,6 +25,8 @@ public class DressCollocationController {
 
     @Autowired
     private DressCollationInfoService infoService;
+    @Autowired
+    private DressCollocationItem itemService;
 
     /**
      * 手动分页
@@ -30,13 +34,13 @@ public class DressCollocationController {
      * @param pageSize
      * @return
      */
-    @GetMapping("/api/collocations")
+    @GetMapping("/api/collocations0")
     public List<DressCollocationInfo> list0(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize){
         if(pageNo == null || pageNo < 0 || pageSize < 0){
             logger.error("传入参数不正确");
             return null;
         }
-        List<DressCollocationInfo> infoList = infoService.getDressCollationInfoListByPage(pageNo, pageSize);
+        List<DressCollocationInfo> infoList = infoService.getListByPage(pageNo, pageSize);
         infoList.size();
         return infoList;
     }
@@ -48,16 +52,44 @@ public class DressCollocationController {
      * @return
      */
     @GetMapping("/api/collocations")
-    public PageInfo list(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize){
+    public PageInfo list(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize, String orderByItem, String orderByPattern){
         pageNo=pageNo==null?1:pageNo;
         pageSize=pageSize==null?10:pageSize;
+        orderByItem =  orderByItem == null ? "ID" : orderByItem;
+        orderByPattern = orderByPattern == null ? "DESC" : orderByPattern;
         PageHelper.startPage(pageNo,pageSize);
-        List<DressCollocationInfo> infoList = infoService.getDressCollationInfoList();
-        infoList.size();
+        PageHelper.orderBy(new StringBuilder().append(orderByItem).append(" ").append(orderByPattern).toString());
+        List<DressCollocationInfo> infoList = infoService.getList();
         PageInfo<DressCollocationInfo> pageInfo = new PageInfo<>(infoList);
         return pageInfo;
     }
 
+    /**
+     * 新增搭配
+     * @param dressInfo
+     * @param dressItemList
+     * TODO
+     */
+    public void add(@RequestBody DressCollocationInfo dressInfo, @RequestBody List<DressCollocationItem> dressItemList){
+        if(null != dressInfo){
+            infoService.add(dressInfo);
+        }
+        if(null != dressItemList){
+//            itemService.itemService
+        }
+    }
+
+    /**
+     * 更新搭配信息
+     * @param dressInfo
+     * @param dressItemList
+     * TODO
+     */
+    public void update(@RequestBody DressCollocationInfo dressInfo, @RequestBody List<DressCollocationItem> dressItemList){
+        if(null != dressInfo){
+            infoService.update(dressInfo);
+        }
+    }
 
 /*
     @RequestMapping(value="/changeShowStatus",method = RequestMethod.GET)

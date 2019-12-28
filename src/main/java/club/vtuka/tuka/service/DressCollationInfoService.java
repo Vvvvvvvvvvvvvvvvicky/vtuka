@@ -22,7 +22,7 @@ public class DressCollationInfoService {
      * @param pageSize
      * @return
      */
-    public List<DressCollocationInfo> getDressCollationInfoListByPage(int pageNo,int pageSize){
+    public List<DressCollocationInfo> getListByPage(int pageNo,int pageSize){
         List<DressCollocationInfo> infoList = infoMapper.selectBatchByPage(pageNo, pageSize);
         return infoList;
     }
@@ -31,14 +31,18 @@ public class DressCollationInfoService {
      * 获取全部搭配列表
      * @return
      */
-    public List<DressCollocationInfo> getDressCollationInfoList(){
+    public List<DressCollocationInfo> getList(){
         List<DressCollocationInfo> infoList = infoMapper.selectBatch();
         return infoList;
     }
 
-    public int updateDressCollocationInfo(DressCollocationInfo info){
+    public int update(DressCollocationInfo info){
         int result = infoMapper.updateByPrimaryKeySelective(info);
         return result;
+    }
+
+    public void add(DressCollocationInfo info){
+        infoMapper.insert(info);
     }
 
 }
