@@ -27,7 +27,7 @@ public class LoginController {
         if(null == userDb){
             return RespResult.error("账号密码错误或用户不存在");
         }else{
-            return RespResult.ok("成功");
+            return RespResult.ok();
         }
     }
 }

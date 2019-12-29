@@ -2,6 +2,7 @@ package club.vtuka.tuka.controller;
 
 import club.vtuka.tuka.model.DressCollocationInfo;
 import club.vtuka.tuka.model.DressCollocationItem;
+import club.vtuka.tuka.model.RespResult;
 import club.vtuka.tuka.service.DressCollationInfoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -9,9 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -52,42 +51,54 @@ public class DressCollocationController {
      * @return
      */
     @GetMapping("/api/collocations")
-    public PageInfo list(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize, String orderByItem, String orderByPattern){
+    public RespResult list(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize, String orderByItem, String orderByPattern){
         pageNo=pageNo==null?1:pageNo;
         pageSize=pageSize==null?10:pageSize;
         orderByItem =  orderByItem == null ? "ID" : orderByItem;
         orderByPattern = orderByPattern == null ? "DESC" : orderByPattern;
+
         PageHelper.startPage(pageNo,pageSize);
         PageHelper.orderBy(new StringBuilder().append(orderByItem).append(" ").append(orderByPattern).toString());
+
         List<DressCollocationInfo> infoList = infoService.getList();
         PageInfo<DressCollocationInfo> pageInfo = new PageInfo<>(infoList);
-        return pageInfo;
+
+        return RespResult.ok(RespResult.success,pageInfo);
     }
 
     /**
      * 新增搭配
      * @param dressInfo
-     * @param dressItemList
-     * TODO
      */
-    public void add(@RequestBody DressCollocationInfo dressInfo, @RequestBody List<DressCollocationItem> dressItemList){
-        if(null != dressInfo){
-            infoService.add(dressInfo);
+    @PostMapping("/api/collocations/info")
+    public RespResult add(@RequestBody DressCollocationInfo dressInfo){
+        if(null == dressInfo){
+            return RespResult.error();
         }
-        if(null != dressItemList){
-//            itemService.itemService
+
+        int result = infoService.add(dressInfo);
+
+        if(1 == result){
+            return RespResult.ok();
+        }else{
+            return RespResult.error();
         }
     }
 
     /**
      * 更新搭配信息
      * @param dressInfo
-     * @param dressItemList
-     * TODO
      */
-    public void update(@RequestBody DressCollocationInfo dressInfo, @RequestBody List<DressCollocationItem> dressItemList){
-        if(null != dressInfo){
-            infoService.update(dressInfo);
+    @PutMapping("/api/collocations/info")
+    public RespResult update(@RequestBody DressCollocationInfo dressInfo){
+        if(null == dressInfo){
+            return RespResult.error();
+        }
+        int result = infoService.update(dressInfo);
+        if(1 == result){
+            return RespResult.ok();
+        }else{
+            return RespResult.error();
         }
     }
 
@@ -104,18 +115,24 @@ public class DressCollocationController {
         int updateResult = infoService.updateDressCollocationInfo(info);
         return new Result(updateResult,null);
     }
-
-    @RequestMapping(value="/deleteInfoById",method=RequestMethod.GET)
-    @ResponseBody
-    public Result deleteInfoById(@Param("id")Long id){
+*/
+    @DeleteMapping("/api/collocations/info")
+    public RespResult delete(@Param("id")Long id){
         if(id == null){
-            return new Result(Result.wrongParam,null);
+            return RespResult.error(RespResult.wrongParam);
         }
+
         DressCollocationInfo info = new DressCollocationInfo();
         info.setIsDelete(true);
         info.setId(id);
-        int result = infoService.updateDressCollocationInfo(info);
-        return new Result(result,null);
+
+        int result = infoService.update(info);
+
+        if(1 == result){
+            return RespResult.ok();
+        }else{
+            return RespResult.error();
+        }
     }
-*/
+
 }

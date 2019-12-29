@@ -41,8 +41,9 @@ public class DressCollationInfoService {
         return result;
     }
 
-    public void add(DressCollocationInfo info){
-        infoMapper.insert(info);
+    public int add(DressCollocationInfo info){
+        int result = infoMapper.insert(info);
+        return result;
     }
 
 }
