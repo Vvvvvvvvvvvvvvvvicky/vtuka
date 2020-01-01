@@ -1,7 +1,6 @@
 package club.vtuka.tuka.controller;
 
 import club.vtuka.tuka.model.DressCollocationInfo;
-import club.vtuka.tuka.model.DressCollocationItem;
 import club.vtuka.tuka.model.RespResult;
 import club.vtuka.tuka.service.DressCollationInfoService;
 import com.github.pagehelper.PageHelper;
@@ -24,11 +23,10 @@ public class DressCollocationController {
 
     @Autowired
     private DressCollationInfoService infoService;
-    @Autowired
-    private DressCollocationItem itemService;
+
 
     /**
-     * 手动分页
+     * 手动分页（废）
      * @param pageNo
      * @param pageSize
      * @return
@@ -78,7 +76,7 @@ public class DressCollocationController {
 
         int result = infoService.add(dressInfo);
 
-        if(1 == result){
+        if(RespResult.successInt == result){
             return RespResult.ok();
         }else{
             return RespResult.error();
@@ -95,27 +93,40 @@ public class DressCollocationController {
             return RespResult.error();
         }
         int result = infoService.update(dressInfo);
-        if(1 == result){
+        if(RespResult.successInt == result){
             return RespResult.ok();
         }else{
             return RespResult.error();
         }
     }
 
-/*
-    @RequestMapping(value="/changeShowStatus",method = RequestMethod.GET)
-    @ResponseBody
-    public Result changeShowStatusById(@Param("id")Long id, @Param("isShow") Boolean isShow){
-        if(id == null || isShow == null){
-            return new Result(Result.wrongParam,null);
+    /**
+     * 删除（逻辑），参数为对象
+     * @param dressInfo
+     * @return
+     */
+   @DeleteMapping("/api/collocations/info0")
+    public RespResult delete(@RequestBody DressCollocationInfo dressInfo){
+        if(null == dressInfo){
+            return RespResult.error();
         }
         DressCollocationInfo info = new DressCollocationInfo();
-        info.setIsShow(isShow);
-        info.setId(id);
-        int updateResult = infoService.updateDressCollocationInfo(info);
-        return new Result(updateResult,null);
+        info.setId(dressInfo.getId());
+        info.setIsDelete(Boolean.FALSE);
+
+        int result = infoService.update(info);
+        if(RespResult.successInt == result){
+            return RespResult.ok();
+        }else{
+            return RespResult.error();
+        }
     }
-*/
+
+    /**
+     * 删除（逻辑），参数为id值
+     * @param id
+     * @return
+     */
     @DeleteMapping("/api/collocations/info")
     public RespResult delete(@Param("id")Long id){
         if(id == null){
@@ -128,7 +139,7 @@ public class DressCollocationController {
 
         int result = infoService.update(info);
 
-        if(1 == result){
+        if(RespResult.successInt == result){
             return RespResult.ok();
         }else{
             return RespResult.error();

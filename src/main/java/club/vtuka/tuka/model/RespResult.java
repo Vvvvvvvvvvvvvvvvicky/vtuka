@@ -9,6 +9,8 @@ public class RespResult {
     public static String success = "操作成功";
     public static String fail = "操作失败";
 
+    public static int successInt = 1;
+    public static int failInt = 0;
 
     public RespResult(Integer status, String msg, Object resultObj){
         this.status=status;
